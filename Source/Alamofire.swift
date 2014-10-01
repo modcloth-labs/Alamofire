@@ -236,7 +236,7 @@ public class Manager {
 
                     // User-Agent Header; see http://tools.ietf.org/html/rfc7231#section-5.5.3
                     let userAgent: String = {
-                        let info = NSBundle.mainBundle().infoDictionary
+                        let info = NSBundle.mainBundle().infoDictionary!
                         let executable: AnyObject = info[kCFBundleExecutableKey] ?? "Unknown"
                         let bundle: AnyObject = info[kCFBundleIdentifierKey] ?? "Unknown"
                         let version: AnyObject = info[kCFBundleVersionKey] ?? "Unknown"
@@ -1216,7 +1216,7 @@ extension Request: DebugPrintable {
         }
 
         if let credentialStorage = session.configuration.URLCredentialStorage {
-            let protectionSpace = NSURLProtectionSpace(host: URL.host!, port: URL.port ?? 0, `protocol`: URL.scheme, realm: URL.host, authenticationMethod: NSURLAuthenticationMethodHTTPBasic)
+            let protectionSpace = NSURLProtectionSpace(host: URL.host!, port: URL.port?.integerValue ?? 0, `protocol`: URL.scheme, realm: URL.host, authenticationMethod: NSURLAuthenticationMethodHTTPBasic)
             if let credentials = credentialStorage.credentialsForProtectionSpace(protectionSpace)?.values.array {
                 for credential: NSURLCredential in (credentials as [NSURLCredential]) {
                     components.append("-u \(credential.user):\(credential.password)")
